@@ -1,0 +1,75 @@
+import sys
+
+# List to store student records
+students = []
+
+def add_student():
+    """Add a new student's result"""
+    name = input("Enter student's name: ")
+    roll_no = input("Enter student's roll number: ")
+    marks = {}
+    
+    while True:
+        subject = input("Enter subject (or type 'done' to finish): ")
+        if subject.lower() == 'done':
+            break
+        score = float(input(f"Enter marks for {subject}: "))
+        marks[subject] = score
+    
+    student = {
+        'name': name,
+        'roll_no': roll_no,
+        'marks': marks
+    }
+    students.append(student)
+    print(f"Student {name} added successfully.\n")
+
+def view_student_results():
+    """View a student's results"""
+    roll_no = input("Enter student's roll number: ")
+    for student in students:
+        if student['roll_no'] == roll_no:
+            print(f"\nResults for {student['name']} (Roll No: {student['roll_no']}):")
+            for subject, marks in student['marks'].items():
+                print(f"{subject}: {marks}")
+            print()
+            return
+    print("Student not found.\n")
+
+def calculate_average():
+    """Calculate average marks for a student"""
+    roll_no = input("Enter student's roll number: ")
+    for student in students:
+        if student['roll_no'] == roll_no:
+            total_marks = sum(student['marks'].values())
+            num_subjects = len(student['marks'])
+            average_marks = total_marks / num_subjects if num_subjects > 0 else 0
+            print(f"\nAverage marks for {student['name']} (Roll No: {student['roll_no']}): {average_marks:.2f}\n")
+            return
+    print("Student not found.\n")
+
+def main():
+    """Main function to run the CLI"""
+    while True:
+        print("Student Results Management System")
+        print("1. Add Student Result")
+        print("2. View Student Results")
+        print("3. Calculate Average Marks")
+        print("4. Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            add_student()
+        elif choice == '2':
+            view_student_results()
+        elif choice == '3':
+            calculate_average()
+        elif choice == '4':
+            print("Exiting...")
+            sys.exit()
+        else:
+            print("Invalid choice. Please try again.\n")
+
+if __name__ == "__main__":
+    main()
